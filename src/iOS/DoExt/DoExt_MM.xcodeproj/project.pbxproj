@@ -1,0 +1,265 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CC9D63041AEC7696003BF884 /* do_SQLite_MM.m in Sources */ = {isa = PBXBuildFile; fileRef = CC9D63031AEC7696003BF884 /* do_SQLite_MM.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DDBB13F41AA7F9DE00393470 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		CC9D63011AEC768A003BF884 /* do_SQLite_IMM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = do_SQLite_IMM.h; sourceTree = "<group>"; };
+		CC9D63021AEC7696003BF884 /* do_SQLite_MM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = do_SQLite_MM.h; sourceTree = "<group>"; };
+		CC9D63031AEC7696003BF884 /* do_SQLite_MM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = do_SQLite_MM.m; sourceTree = "<group>"; };
+		DDBB13F61AA7F9DE00393470 /* libDoExt_MM.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDoExt_MM.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DDBB13F31AA7F9DE00393470 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DDBB13ED1AA7F9DE00393470 = {
+			isa = PBXGroup;
+			children = (
+				DDBB14131AA7FAE000393470 /* ext_implement */,
+				DDBB14111AA7FACD00393470 /* ext_define */,
+				DDBB13F71AA7F9DE00393470 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DDBB13F71AA7F9DE00393470 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DDBB13F61AA7F9DE00393470 /* libDoExt_MM.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DDBB14111AA7FACD00393470 /* ext_define */ = {
+			isa = PBXGroup;
+			children = (
+				CC9D63011AEC768A003BF884 /* do_SQLite_IMM.h */,
+			);
+			path = ext_define;
+			sourceTree = "<group>";
+		};
+		DDBB14131AA7FAE000393470 /* ext_implement */ = {
+			isa = PBXGroup;
+			children = (
+				CC9D63021AEC7696003BF884 /* do_SQLite_MM.h */,
+				CC9D63031AEC7696003BF884 /* do_SQLite_MM.m */,
+			);
+			path = ext_implement;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DDBB13F51AA7F9DE00393470 /* DoExt_MM */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DDBB140A1AA7F9DE00393470 /* Build configuration list for PBXNativeTarget "DoExt_MM" */;
+			buildPhases = (
+				DDBB13F21AA7F9DE00393470 /* Sources */,
+				DDBB13F31AA7F9DE00393470 /* Frameworks */,
+				DDBB13F41AA7F9DE00393470 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DoExt_MM;
+			productName = Demo;
+			productReference = DDBB13F61AA7F9DE00393470 /* libDoExt_MM.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DDBB13EE1AA7F9DE00393470 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = MingerW;
+				TargetAttributes = {
+					DDBB13F51AA7F9DE00393470 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+				};
+			};
+			buildConfigurationList = DDBB13F11AA7F9DE00393470 /* Build configuration list for PBXProject "DoExt_MM" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = DDBB13ED1AA7F9DE00393470;
+			productRefGroup = DDBB13F71AA7F9DE00393470 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DDBB13F51AA7F9DE00393470 /* DoExt_MM */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DDBB13F21AA7F9DE00393470 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC9D63041AEC7696003BF884 /* do_SQLite_MM.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		DDBB14081AA7F9DE00393470 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		DDBB14091AA7F9DE00393470 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DDBB140B1AA7F9DE00393470 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = ../doLib/doCore;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = DoExt_MM;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = ../doLib/doCore/Header;
+			};
+			name = Debug;
+		};
+		DDBB140C1AA7F9DE00393470 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = ../doLib/doCore;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = DoExt_MM;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = ../doLib/doCore/Header;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DDBB13F11AA7F9DE00393470 /* Build configuration list for PBXProject "DoExt_MM" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DDBB14081AA7F9DE00393470 /* Debug */,
+				DDBB14091AA7F9DE00393470 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DDBB140A1AA7F9DE00393470 /* Build configuration list for PBXNativeTarget "DoExt_MM" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DDBB140B1AA7F9DE00393470 /* Debug */,
+				DDBB140C1AA7F9DE00393470 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DDBB13EE1AA7F9DE00393470 /* Project object */;
+}

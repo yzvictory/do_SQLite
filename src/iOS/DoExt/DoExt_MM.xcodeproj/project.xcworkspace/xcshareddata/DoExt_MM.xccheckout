@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>E15394C4-4FF0-4E42-BAC1-D659AA1A4E6C</string>
+	<key>IDESourceControlProjectName</key>
+	<string>DoExt_MM</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>5D63CEE37CB56E2A0D5F55D338F7B7C011DE7979</key>
+		<string>https://github.com/deviceone/do_SQLite.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>src/iOS/DoExt/DoExt_MM.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>5D63CEE37CB56E2A0D5F55D338F7B7C011DE7979</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/deviceone/do_SQLite.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>5D63CEE37CB56E2A0D5F55D338F7B7C011DE7979</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>5D63CEE37CB56E2A0D5F55D338F7B7C011DE7979</string>
+			<key>IDESourceControlWCCName</key>
+			<string>do_SQLite</string>
+		</dict>
+	</array>
+</dict>
+</plist>
