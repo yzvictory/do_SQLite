@@ -1,5 +1,7 @@
 package doext.implement;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -118,8 +120,17 @@ public class do_SQLite_Model extends do_SQLite_MAbstract implements do_SQLite_IM
 				database = SQLiteDatabase.create(null);
 			} else {
 				String dbPath = _scriptEngine.getCurrentApp().getDataFS().getFileFullPathByName(path);
+				createDBFile(dbPath);
 				database = SQLiteDatabase.openOrCreateDatabase(dbPath, null);
 			}
+		}
+	}
+	
+	//创建数据库DB文件
+	private void createDBFile(String dbPath) throws IOException {
+		File dbFile = new File(dbPath);
+		if (!dbFile.exists()) {
+			dbFile.createNewFile();
 		}
 	}
 	
