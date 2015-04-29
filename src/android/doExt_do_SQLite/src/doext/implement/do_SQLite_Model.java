@@ -70,6 +70,10 @@ public class do_SQLite_Model extends do_SQLite_MAbstract implements do_SQLite_IM
 			close(_dictParas, _scriptEngine, _invokeResult);
 			return true;
 		}
+		if ("executeSync".equals(_methodName)) {
+			executeSync(_dictParas, _scriptEngine, _invokeResult);
+			return true;
+		}
 		return super.invokeSyncMethod(_methodName, _dictParas, _scriptEngine, _invokeResult);
 	}
 	
@@ -146,7 +150,28 @@ public class do_SQLite_Model extends do_SQLite_MAbstract implements do_SQLite_IM
 			database.close();
 		}
 	}
-
+	
+	/**
+	 * 执行SQL语句；
+	 * @throws Exception 
+	 * @_dictParas 参数（K,V），可以通过此对象提供相关方法来获取参数值（Key：为参数名称）；
+	 * @_scriptEngine 当前Page JS上下文环境对象
+	 * @_callbackFuncName 回调函数名
+	 */
+	@Override
+	public void executeSync(DoJsonNode _dictParas, DoIScriptEngine _scriptEngine,
+			DoInvokeResult _invokeResult) throws Exception {
+		String _sql = _dictParas.getOneText("sql","").trim();
+		DoInvokeResult invokeResult = new DoInvokeResult(getUniqueKey());
+		try {
+			execSQL(_sql);
+			invokeResult.setResultBoolean(true);
+		} catch (Exception _err) {
+			invokeResult.setResultBoolean(false);
+			DoServiceContainer.getLogEngine().writeError("SQLite", _err);
+		}
+	}
+	
 	/**
 	 * 执行SQL语句；
 	 * @throws Exception 
@@ -159,24 +184,28 @@ public class do_SQLite_Model extends do_SQLite_MAbstract implements do_SQLite_IM
 		String _sql = _dictParas.getOneText("sql","").trim();
 		DoInvokeResult invokeResult = new DoInvokeResult(getUniqueKey());
 		try {
-			if("".equals(_sql) || null == _sql){
-				throw new RuntimeException("执行SQL失败，sql：" + _sql);
-			}
-			String _sql_prefix = "";
-			if(_sql.length() >= 6){
-				_sql_prefix = _sql.substring(0, 6);
-			}
-			if (("INSERT").equalsIgnoreCase(_sql_prefix)) {
-				executeInsert(_sql);
-			} else {
-				database.execSQL(_sql);
-			}
+			execSQL(_sql);
 			invokeResult.setResultBoolean(true);
 		} catch (Exception _err) {
 			invokeResult.setResultBoolean(false);
 			DoServiceContainer.getLogEngine().writeError("SQLite", _err);
 		} finally {
 			_scriptEngine.callback(_callbackFuncName, invokeResult);
+		}
+	}
+	
+	private void execSQL(String sql){
+		if("".equals(sql) || null == sql){
+			throw new RuntimeException("执行SQL失败，sql：" + sql);
+		}
+		String _sql_prefix = "";
+		if(sql.length() >= 6){
+			_sql_prefix = sql.substring(0, 6);
+		}
+		if (("INSERT").equalsIgnoreCase(_sql_prefix)) {
+			executeInsert(sql);
+		} else {
+			database.execSQL(sql);
 		}
 	}
 	
