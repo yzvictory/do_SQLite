@@ -1,9 +1,9 @@
 package doext.implement;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import android.content.ContentValues;
@@ -12,11 +12,10 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import core.DoServiceContainer;
+import core.helper.DoIOHelper;
 import core.helper.jsonparse.DoJsonNode;
 import core.helper.jsonparse.DoJsonValue;
-import core.interfaces.DoIListData;
 import core.interfaces.DoIScriptEngine;
-import core.interfaces.datamodel.DoIDataSource;
 import core.object.DoInvokeResult;
 import doext.define.do_SQLite_IMethod;
 import doext.define.do_SQLite_MAbstract;
@@ -28,10 +27,9 @@ import doext.define.do_SQLite_MAbstract;
  * 参数解释：@_messageName字符串事件名称，@jsonResult传递事件参数对象；
  * 获取DoInvokeResult对象方式new DoInvokeResult(this.getUniqueKey());
  */
-public class do_SQLite_Model extends do_SQLite_MAbstract implements do_SQLite_IMethod, DoIDataSource, DoIListData {
+public class do_SQLite_Model extends do_SQLite_MAbstract implements do_SQLite_IMethod {
 	
 	private SQLiteDatabase database;
-	private List<DoJsonValue> modelData;
 	
 	public do_SQLite_Model() throws Exception {
 		super();
@@ -112,7 +110,7 @@ public class do_SQLite_Model extends do_SQLite_MAbstract implements do_SQLite_IM
 	@Override
 	public void open(DoJsonNode _dictParas, DoIScriptEngine _scriptEngine,
 			DoInvokeResult _invokeResult) throws Exception {
-		String path = _dictParas.getOneText("path", getPropertyValue("path"));
+		String path = _dictParas.getOneText("path", "");
 		if ("".equals(path) || null == path) {
 			DoServiceContainer.getLogEngine().writeInfo("Do_SQLite","打开数据库失败：path" + path);
 		}else{
@@ -126,12 +124,15 @@ public class do_SQLite_Model extends do_SQLite_MAbstract implements do_SQLite_IM
 		}
 	}
 	
-	//创建数据库DB文件
+	/**
+	 * 创建数据库DB文件
+	 * @param dbPath
+	 * @throws IOException
+	 */
 	private void createDBFile(String dbPath) throws IOException {
-		File dbFile = new File(dbPath);
-		if (!dbFile.exists()) {
-			dbFile.createNewFile();
-		}
+		String _directory = dbPath.substring(0, dbPath.lastIndexOf("/"));
+		DoIOHelper.createDirectory(_directory);
+		DoIOHelper.createFile(dbPath);
 	}
 	
 	/**
@@ -157,12 +158,13 @@ public class do_SQLite_Model extends do_SQLite_MAbstract implements do_SQLite_IM
 	 */
 	@Override
 	public void execute(DoJsonNode _dictParas, DoIScriptEngine _scriptEngine,String _callbackFuncName) throws Exception {
-		String _sql = _dictParas.getOneText("sql", getPropertyValue("sql")).trim();
+		String _sql = _dictParas.getOneText("sql","").trim();
 		DoInvokeResult invokeResult = new DoInvokeResult(getUniqueKey());
 		try {
 			if("".equals(_sql) || null == _sql){
 				throw new RuntimeException("执行SQL失败，sql：" + _sql);
 			}
+			_sql = _sql.toUpperCase(Locale.ENGLISH);
 			String _sql_prefix = "";
 			if(_sql.length() >= 6){
 				_sql_prefix = _sql.substring(0, 6);
@@ -254,7 +256,7 @@ public class do_SQLite_Model extends do_SQLite_MAbstract implements do_SQLite_IM
 	 */
 	@Override
 	public void query(DoJsonNode _dictParas, DoIScriptEngine _scriptEngine,String _callbackFuncName) throws Exception {
-		String _sql = _dictParas.getOneText("sql", getPropertyValue("sql")).trim();
+		String _sql = _dictParas.getOneText("sql","").trim();
 		DoInvokeResult invokeResult = new DoInvokeResult(getUniqueKey());
 		Cursor cursor = null;
 		try {
@@ -270,53 +272,6 @@ public class do_SQLite_Model extends do_SQLite_MAbstract implements do_SQLite_IM
 			if(cursor!=null && !cursor.isClosed()){
 				cursor.close();
 			}
-		}
-	}
-	
-	@Override
-	public void getJsonData(final DoGetJsonCallBack _callback) throws Exception {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				Cursor cursor = null;
-				try {
-					String _sql = getPropertyValue("sql");
-					if("".equals(_sql) || null == _sql){
-						throw new RuntimeException("SQLite查询失败，sql：" + _sql);
-					}
-					cursor = database.rawQuery(_sql, new String[] {});
-					modelData = getQueryResult(cursor,_sql);
-					_callback.doGetJsonCallBack(do_SQLite_Model.this);
-				} catch (Exception e) {
-					DoServiceContainer.getLogEngine().writeError("SQLite", e);
-				}finally {
-					if(cursor!=null && !cursor.isClosed()){
-						cursor.close();
-					}
-				}
-			}
-		}).start();
-	}
-
-	@Override
-	public int getCount() {
-		if(null != modelData){
-			modelData.size();
-		}
-		return 0;
-	}
-
-	@Override
-	public Object getData(int location) {
-		return modelData.get(location);
-	}
-
-	@Override
-	public void dispose() {
-		super.dispose();
-		if(null != modelData){
-			modelData.clear();
-			modelData = null;
 		}
 	}
 }
