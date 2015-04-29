@@ -3,10 +3,8 @@ package doext.implement;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -164,17 +162,12 @@ public class do_SQLite_Model extends do_SQLite_MAbstract implements do_SQLite_IM
 			if("".equals(_sql) || null == _sql){
 				throw new RuntimeException("执行SQL失败，sql：" + _sql);
 			}
-			_sql = _sql.toUpperCase(Locale.ENGLISH);
 			String _sql_prefix = "";
 			if(_sql.length() >= 6){
 				_sql_prefix = _sql.substring(0, 6);
 			}
 			if (("INSERT").equalsIgnoreCase(_sql_prefix)) {
 				executeInsert(_sql);
-			} else if (("DELETE").equalsIgnoreCase(_sql_prefix)) {
-				 executeDelete(_sql);
-			} else if (("UPDATE").equalsIgnoreCase(_sql_prefix)) {
-				 executeUpdate(_sql);
 			} else {
 				database.execSQL(_sql);
 			}
@@ -187,15 +180,13 @@ public class do_SQLite_Model extends do_SQLite_MAbstract implements do_SQLite_IM
 		}
 	}
 	
-	private int executeInsert(String _sql){
-		int rows = 0;
+	private void executeInsert(String _sql){
 		String sqls[] = _sql.split(";");
 		database.beginTransaction();
 		try{
 			for (String sql : sqls) {
 				SQLiteStatement statement = database.compileStatement(sql);
 				statement.executeInsert();
-				rows++;
 			}
 			database.setTransactionSuccessful();
 		}catch(SQLException e){
@@ -204,26 +195,6 @@ public class do_SQLite_Model extends do_SQLite_MAbstract implements do_SQLite_IM
 		}finally{
 			database.endTransaction();
 		}
-		return rows;
-	}
-
-	private int executeUpdate(String _sql) {
-		String table = _sql.substring(6, _sql.indexOf("SET")).trim();
-		String setClause = _sql.substring(_sql.indexOf("SET") + 3, _sql.indexOf("WHERE")).trim();
-		String whereClause = _sql.substring(_sql.indexOf("WHERE") + 5).trim();
-		ContentValues values = new ContentValues();
-		for (String clause : setClause.split(",")) {
-			String key = clause.split("=")[0].trim();
-			String value = clause.split("=")[1].trim().replaceAll("'", "");
-			values.put(key, value);
-		}
-		return database.update(table, values, whereClause, null);
-	}
-
-	private int executeDelete(String _sql) {
-		String table = _sql.substring(_sql.indexOf("FROM") + 4, _sql.indexOf("WHERE")).trim();
-		String whereClause = _sql.substring(_sql.indexOf("WHERE") + 5).trim();
-		return database.delete(table, whereClause, null);
 	}
 
 	private List<DoJsonValue> getQueryResult(Cursor cursor, String sql) throws Exception{
