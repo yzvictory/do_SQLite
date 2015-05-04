@@ -16,6 +16,7 @@
 #import "doIScriptEngine.h"
 #import "doIApp.h"
 #import "doIDataFS.h"
+#import "doIOHelper.h"
 
 @implementation do_SQLite_MM
 {
@@ -86,6 +87,9 @@
      {
          dbName = [_scritEngine.CurrentApp.DataFS GetFileFullPathByName:dbPath];
      }
+     NSString* path = [dbName stringByDeletingLastPathComponent];
+     if(![doIOHelper ExistDirectory:path] )
+        [doIOHelper CreateDirectory:path];
      int result = sqlite3_open([dbName UTF8String], &dbConnection);
      if (result == SQLITE_OK) {
          // 创建打开成功
@@ -123,7 +127,7 @@
     //自己的代码实现
     NSString* sqlString = [_dictParas GetOneText:@"sql" :@"" ];
     sqlite3_stmt *statement;
-    doJsonNode * node = [[doJsonNode alloc]init];
+    NSMutableArray* _array = [[NSMutableArray alloc]init];
     @try {
         int result = sqlite3_prepare_v2(dbConnection, [sqlString UTF8String], -1, &statement, nil);
         if (result == SQLITE_OK) {
@@ -131,6 +135,7 @@
             int columnCount = sqlite3_column_count(statement);
             while (sqlite3_step(statement) == SQLITE_ROW)
             {
+                doJsonNode * node = [[doJsonNode alloc]init];
                 for(int i = 0;i<columnCount;i++){
                     const char *_columnName=sqlite3_column_name(statement, i);
                     NSString *columnName=[[NSString alloc] initWithUTF8String:_columnName];
@@ -139,12 +144,15 @@
                     NSString *rowData = [[NSString alloc] initWithUTF8String:_rowData];
                     [node SetOneText:columnName :rowData];
                 }
+                doJsonValue *jsonValue = [[doJsonValue alloc] init];
+                [jsonValue SetNode:node];
+                [_array addObject:jsonValue];
             }
         }
         else{
             [NSException raise:@"doSqlite" format:@"sql:%@无效!",sqlString,nil];
         }
-        [_invokeResult SetResultNode:node];
+        [_invokeResult SetResultArray:_array];
     }
     @catch (NSException *exception) {
         [_invokeResult SetException:exception];
