@@ -12,7 +12,7 @@
 #import "doIScriptEngine.h"
 #import "doInvokeResult.h"
 #import <sqlite3.h>
-#import "doJsonNode.h"
+#import "doJsonHelper.h"
 #import "doIScriptEngine.h"
 #import "doIApp.h"
 #import "doIDataFS.h"
@@ -43,9 +43,9 @@
 #pragma mark - 同步异步方法的实现
 /*
  1.参数节点
- doJsonNode *_dictParas = [parms objectAtIndex:0];
+ NSDictionary *_dictParas = [parms objectAtIndex:0];
  a.在节点中，获取对应的参数
- NSString *title = [_dictParas GetOneText:@"title" :@"" ];
+ NSString *title = [doJsonHelper GetOneText: _dictParas :@"title" :@"" ];
  说明：第一个参数为对象名，第二为默认值
  
  2.脚本运行时的引擎
@@ -76,11 +76,11 @@
  }
  - (void)open:(NSArray *)parms
  {
-     doJsonNode *_dictParas = [parms objectAtIndex:0];
+     NSDictionary *_dictParas = [parms objectAtIndex:0];
      id<doIScriptEngine> _scritEngine = [parms objectAtIndex:1];
      doInvokeResult *_invokeResult = [parms objectAtIndex:2];
      
-     NSString* dbPath = [_dictParas GetOneText:@"path" :@":memory:" ];
+     NSString* dbPath = [doJsonHelper GetOneText: _dictParas :@"path" :@":memory:" ];
      NSString* dbName = dbPath;
      //只支持:memory: 或者data://打头
      if(![dbPath isEqualToString:@":memory:"])
@@ -102,10 +102,10 @@
 //异步
 - (void)execute:(NSArray *)parms
 {
-    doJsonNode *_dictParas = [parms objectAtIndex:0];
+    NSDictionary *_dictParas = [parms objectAtIndex:0];
     id<doIScriptEngine> _scritEngine = [parms objectAtIndex:1];
     //自己的代码实现
-    NSString* sqlString = [_dictParas GetOneText:@"sql" :@"" ];
+    NSString* sqlString = [doJsonHelper GetOneText: _dictParas :@"sql" :@"" ];
     int result = sqlite3_exec(dbConnection, [sqlString UTF8String], NULL, NULL, NULL);
     doInvokeResult *_invokeResult = [[doInvokeResult alloc] init];
     if (result == SQLITE_OK) {
@@ -120,12 +120,12 @@
 }
 - (void)query:(NSArray *)parms
 {
-    doJsonNode *_dictParas = [parms objectAtIndex:0];
+    NSDictionary *_dictParas = [parms objectAtIndex:0];
     id<doIScriptEngine> _scritEngine = [parms objectAtIndex:1];
     doInvokeResult *_invokeResult = [[doInvokeResult alloc] init];
 
     //自己的代码实现
-    NSString* sqlString = [_dictParas GetOneText:@"sql" :@"" ];
+    NSString* sqlString = [doJsonHelper GetOneText: _dictParas :@"sql" :@"" ];
     sqlite3_stmt *statement;
     NSMutableArray* _array = [[NSMutableArray alloc]init];
     @try {
@@ -135,18 +135,16 @@
             int columnCount = sqlite3_column_count(statement);
             while (sqlite3_step(statement) == SQLITE_ROW)
             {
-                doJsonNode * node = [[doJsonNode alloc]init];
+                NSMutableDictionary * node = [[NSMutableDictionary alloc]init];
                 for(int i = 0;i<columnCount;i++){
                     const char *_columnName=sqlite3_column_name(statement, i);
                     NSString *columnName=[[NSString alloc] initWithUTF8String:_columnName];
                     
                     char *_rowData = (char *)sqlite3_column_text(statement, i);
                     NSString *rowData = [[NSString alloc] initWithUTF8String:_rowData];
-                    [node SetOneText:columnName :rowData];
+                    [node setObject:rowData forKey:columnName];
                 }
-                doJsonValue *jsonValue = [[doJsonValue alloc] init];
-                [jsonValue SetNode:node];
-                [_array addObject:jsonValue];
+                [_array addObject:node];
             }
         }
         else{
